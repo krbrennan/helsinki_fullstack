@@ -8,15 +8,22 @@ const Button = (props) => {
   )
 }
 
+
+const Statistic = (props) => {
+  return(
+    <p>{props.text}: {props.value}</p>
+  )
+}
+
 const Statistics = (props) => {
   console.log(props)
   return (
     <div>
       <h1>Statistics</h1>
-      <p>Good: {props.good} </p>
-      <p>Neutral: {props.neutral}</p>
-      <p>Bad: {props.bad}</p>
-      <p>Total: {props.total}</p>
+        <Statistic text="good" value={props.good} />
+        <Statistic text="neutral" value={props.neutral} />
+        <Statistic text="bad" value={props.bad} />
+        <Statistic text="total" value={props.total} />
       <p>Average: { props.total ? ((props.good / props.total) * 100) + "%" : "No Feedback Given" } </p>
     </div>
   )
