@@ -8,6 +8,20 @@ const Button = (props) => {
   )
 }
 
+const Statistics = (props) => {
+  console.log(props)
+  return (
+    <div>
+      <h1>Statistics</h1>
+      <p>Good: {props.good} </p>
+      <p>Neutral: {props.neutral}</p>
+      <p>Bad: {props.bad}</p>
+      <p>Total: {props.total}</p>
+      <p>Average: { props.total ? ((props.good / props.total) * 100) + "%" : "No Feedback Given" } </p>
+    </div>
+  )
+}
+
 
 
 function App() {
@@ -41,12 +55,7 @@ function App() {
     <Button handleClick={ () => incrementNeutral} text='neutral' />
     <Button handleClick={ () => incrementBad} text='bad' />
 
-    <h1>Statistics</h1>
-    <p>Good: {good}</p>
-    <p>Neutral: {neutral}</p>
-    <p>Bad: {bad}</p>
-    <p>Total: {total}</p>
-    <p>Average: { total ? ((good / total) * 100) : 0 } %</p>
+    <Statistics good={good} neutral={neutral} bad={bad} total={total} />
   </div>
   );
 }
