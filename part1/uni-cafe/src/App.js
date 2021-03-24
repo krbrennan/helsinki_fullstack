@@ -20,11 +20,16 @@ const Statistics = (props) => {
   return (
     <div>
       <h1>Statistics</h1>
-        <Statistic text="good" value={props.good} />
-        <Statistic text="neutral" value={props.neutral} />
-        <Statistic text="bad" value={props.bad} />
-        <Statistic text="total" value={props.total} />
-      <p>Average: { props.total ? ((props.good / props.total) * 100) + "%" : "No Feedback Given" } </p>
+      <table>
+       
+        <tr><Statistic text="good" value={props.good} /> </tr>
+        <tr><Statistic text="neutral" value={props.neutral} /></tr>
+        <tr><Statistic text="bad" value={props.bad} /> </tr>
+        <tr><Statistic text="total" value={props.total} /> </tr>
+        <tr><Statistic text="positive" value={ (props.good / props.total) * 100} /> </tr>
+        <tr>Average: { props.total ? (((Math.abs(props.good - props.bad)) / props.total) * 100) + "%" : "No Feedback Given" } </tr>
+        
+      </table>
     </div>
   )
 }
