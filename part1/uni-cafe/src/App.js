@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+
+
+
+const Button = (props) => {
+  return(
+    <button onClick={props.handleClick()}>{props.text}</button>
+  )
+}
+
+
 
 function App() {
+
+  // state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  // handle clicks
+  const incrementGood = (props) => {
+    setGood(good + 1)
+  }
+
+  const incrementNeutral = (props) => {
+    setNeutral(neutral + 1)
+  }
+
+  const incrementBad = (props) => {
+    setBad(bad + 1)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <div>
+     <h1>Give Feedback</h1>
+     <Button handleClick={ () => incrementGood} text='good' />
+     <Button handleClick={ () => incrementNeutral} text='neutral' />
+     <Button handleClick={ () => incrementBad} text='bad' />
+
+     <h1>Statistics</h1>
+     <p>Good: {good}</p>
+     <p>Neutral: {neutral}</p>
+     <p>Bad: {bad}</p>
+
+   </div>
   );
 }
 
