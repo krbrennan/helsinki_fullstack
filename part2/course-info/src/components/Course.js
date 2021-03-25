@@ -3,16 +3,21 @@ import React, { useState }  from 'react';
 const Course = (props) => {
 
     const style = {
-        listStyle:'none'
+        fontWeight:900
     }
 
-    console.log(props.course.parts)
+    let total = 0
+
+    console.log(props.course)
     return(
         <div>
             <h1>{ props.course.name }</h1>
                 {props.course.parts.map((part) => {
-                return <p key={part.id}>{part.name} {part.exercises}</p>
+                    total += part.exercises
+                    return <p key={part.id}>{part.name} {part.exercises}</p>
             })}
+
+            <p style={style}>total of { total } exercises</p>
         </div>
     )
 }
