@@ -1,5 +1,6 @@
 browser--> server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
 server-> broswer: HTML-code
+browser: User writes form field data, hits submit, the browser captures FORM field data and validates it
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/notes
 
 note over browser:
