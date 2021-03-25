@@ -13,8 +13,31 @@ const Vote = (props) => {
   )
 }
 
-const App = () => {
 
+const Anecdote = (props) => {
+  // console.log(props)
+  const points = props.allPoints
+  const anecdotes = props.anecdotes
+
+  const max = Object.values(points)
+  const greatest = Math.max.apply(null, max)
+  let biggest = 0
+
+  for(const [key, val] of Object.entries(points)){
+    if(points[key] == greatest) {
+      biggest = key
+    }
+  }
+
+  return(
+    <p>{ anecdotes[biggest] }</p>
+  )
+}
+
+
+
+
+const App = () => {
 
   const handleClick = (props) => {
     // console.log(Math.floor(Math.random() * Math.floor(anecdotes.length-1)))
@@ -58,6 +81,10 @@ const App = () => {
       <p>Has {points[selected]} Votes</p>
       <Vote vote={handleVote} />
       <Button randomize={handleClick} number={selected} />
+
+      <h1>Anecdote with the most votes:</h1>
+      <Anecdote allPoints={points} anecdotes={anecdotes} />
+{/* retreive the most popular anecdote */}
     </div>
   )
 }
