@@ -1,0 +1,18 @@
+browser--> server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-> broswer: HTML-code
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/notes
+
+note over browser:
+User posts new note to server
+
+server-> browser: accepts or rejects POST request
+
+if server accepts{
+    server->browser: HTTP 200 OK
+    browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+    server->browser: HTML-code
+} else {
+    server->browser: HTTP request failed, 
+    server->browser: reloads page or renders error
+}
+
