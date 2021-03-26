@@ -47,11 +47,11 @@ const App = () => {
     }
   ]
 
-  const allCourses = courses.map((singleCourse) => {
+  return courses.map((singleCourse) => {
     return <Course key={singleCourse.id} course={singleCourse} />
   })
 
-  return allCourses
+  // return allCourses
 }
 
 export default App
