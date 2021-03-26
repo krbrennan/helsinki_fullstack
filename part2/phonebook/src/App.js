@@ -24,24 +24,36 @@ const App = () => {
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
-
   }
 
 
+  const nameTaken = (name) => {
+    // search persons, if this name is already in persons return true, else return false
+
+    let alreadyExists = false
+
+    persons.forEach((person) => {
+      if(person.name.includes(name)){
+        alreadyExists = true
+      }
+    })
+    return alreadyExists
+  }
 
 
   const submitName = (event) => {
     event.preventDefault()
 
-    const newPerson = {
-      name: newName
+    if(nameTaken(newName, persons)) {
+      return alert(`${newName} is already taken!`)
+    } else {
+      const newPerson = {
+        name: newName
+      }
+  
+      setPersons(oldArray => [...oldArray, newPerson])
+      setNewName('')
     }
-
-    // console.log('new person:', newPerson)
-
-    setPersons(oldArray => [...oldArray, persons.push(newPerson)])
-    setNewName('')
-
   }
 
 
