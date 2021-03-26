@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React from 'react';
 
 
 const Total = ({ course }) => {
@@ -13,10 +13,6 @@ const Total = ({ course }) => {
 
 
 const Course = (props) => {
-    const style = {
-        fontWeight:900
-    }
-
     return(
         <div>
             <h1>{ props.course.name }</h1>
