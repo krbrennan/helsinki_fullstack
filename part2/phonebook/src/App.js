@@ -5,7 +5,7 @@ const Persons = (props) => {
   // console.log(props)
   return(
     props.people.map((person, idx) => {
-      return <p key={idx}>{person.name}</p>
+        return <p key={idx}>{person.name}    {person.number} </p> 
     })
   )
 }
@@ -14,9 +14,10 @@ const Persons = (props) => {
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas',  number: '123-456-7890'}
   ]) 
   const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber ] = useState('')
 
 
 
@@ -29,7 +30,6 @@ const App = () => {
 
   const nameTaken = (name) => {
     // search persons, if this name is already in persons return true, else return false
-
     let alreadyExists = false
 
     persons.forEach((person) => {
@@ -40,6 +40,10 @@ const App = () => {
     return alreadyExists
   }
 
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+  }
+
 
   const submitName = (event) => {
     event.preventDefault()
@@ -48,11 +52,13 @@ const App = () => {
       return alert(`${newName} is already taken!`)
     } else {
       const newPerson = {
-        name: newName
+        name: newName,
+        number: newNumber
       }
   
       setPersons(oldArray => [...oldArray, newPerson])
       setNewName('')
+      setNewNumber('')
     }
   }
 
@@ -67,6 +73,7 @@ const App = () => {
         <div>
           name: <input onChange={handleNameChange} value={newName}/>
         </div>
+        <div>number: <input onChange={handleNumberChange} value={newNumber} /></div>
         <div>
           <button type="submit">add</button>
         </div>
