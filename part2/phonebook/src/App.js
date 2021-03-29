@@ -1,27 +1,9 @@
 import React, { useState } from 'react'
 
-
-const Persons = (props) => {
-  // console.log(props)
-
-  console.log(props.filtered)
-
-  if(props.filtered.length > 0) {
-    return(
-      props.filtered.map((person, idx) => {
-        return <p key={idx}>{person.name}    {person.number} </p> 
-      })
-    )
-  } else {
-      return(
-        props.people.map((person, idx) => {
-            return <p key={idx}>{person.name}    {person.number} </p> 
-        })
-      )
-  }
-}
-
-
+// component imports
+import Persons from './components/Persons'
+import Filter from './components/Filter'
+import Form from './components/Form'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
@@ -35,7 +17,7 @@ const App = () => {
 
 
   const [ searchName, setSearchName ] = useState('')
-  const [ filteredNames, setFilteredNames] = useState('')
+  const [ filteredNames, setFilteredNames] = useState([])
 
 
 
@@ -66,22 +48,14 @@ const App = () => {
 
 
   // search Names
-  // search Names
-  // search Names
-  // search Names
-  // search Names
   const handleFilterChange = (event) => {
       // needs access to persons
       setSearchName(event.target.value)
-      // console.log(event.target.value)
   }
 
   const submitSearch = (event) => {
     event.preventDefault()
     setSearchName(searchName)
-
-    // setfilterednames()
-    // filter out persons
 
     const filtered = persons.filter((person) => {
       // person.name
@@ -113,24 +87,17 @@ const App = () => {
 
 
 
-
-
   return (
     <div>
       <h1>Phonebook</h1>
-        <form onSubmit={submitSearch}>
-          Lookup a name:  <input onChange={handleFilterChange} />
-        </form>
-      <form onSubmit={submitName}>
-        <h2>Add a new Contact</h2>
-        <div>
-          name: <input onChange={handleNameChange} value={newName}/>
-        </div>
-        <div>number: <input onChange={handleNumberChange} value={newNumber} /></div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+        <Filter submitSearch={submitSearch} onTextChange={handleFilterChange} />
+        <Form 
+          submitName={submitName} 
+          handleNameChange={handleNameChange} 
+          handleNumberChange={handleNumberChange}  
+          newNumber={newNumber} 
+          newName={newName}
+          />
       <h2>Numbers:</h2>
         <Persons people={persons} filtered={filteredNames} />
       ...
