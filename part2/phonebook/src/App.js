@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 // component imports
 import Persons from './components/Persons'
@@ -6,12 +7,14 @@ import Filter from './components/Filter'
 import Form from './components/Form'
 
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]) 
+  // const [ persons, setPersons ] = useState([
+  //   { name: 'Arto Hellas', number: '040-123456' },
+  //   { name: 'Ada Lovelace', number: '39-44-5323523' },
+  //   { name: 'Dan Abramov', number: '12-43-234345' },
+  //   { name: 'Mary Poppendieck', number: '39-23-6423122' }
+  // ]) 
+
+  const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
 
@@ -85,6 +88,14 @@ const App = () => {
     }
   }
 
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then((res) => {
+        setPersons(res.data)
+      })
+  }, [])
+
 
 
   return (
@@ -95,8 +106,8 @@ const App = () => {
           submitName={submitName} 
           handleNameChange={handleNameChange} 
           handleNumberChange={handleNumberChange}  
-          newNumber={newNumber} 
-          newName={newName}
+          number={newNumber} 
+          name={newName}
           />
       <h2>Numbers:</h2>
         <Persons people={persons} filtered={filteredNames} />
