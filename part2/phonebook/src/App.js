@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+// Import API service functions
+import apiService from './services/numbers'
+
 // component imports
 import Persons from './components/Persons'
 import Filter from './components/Filter'
@@ -82,18 +85,24 @@ const App = () => {
         number: newNumber
       }
   
-      setPersons(oldArray => [...oldArray, newPerson])
+      // setPersons(oldArray => [...oldArray, newPerson])
+      // POST to server, update setPersons with response
+      apiService.create(newPerson).then((res) => {
+        setPersons(oldArray => [...oldArray, res.data])
+      })
       setNewName('')
       setNewNumber('')
     }
   }
 
+  // 
+  // 
+  // 
+  // 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then((res) => {
-        setPersons(res.data)
-      })
+    // apiService.getAll().then(res => setPersons(res))
+    apiService.getAll()
+      .then(res => setPersons(res))
   }, [])
 
 

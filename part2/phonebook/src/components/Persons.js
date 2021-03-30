@@ -2,7 +2,8 @@ import React from 'react'
 
 import Person from './Person'
 
-const Persons = (props) => {    
+const Persons = (props) => { 
+  console.log(props)   
     if(props.filtered.length === 0) {
       return(
         props.people.map((person, idx) => {
