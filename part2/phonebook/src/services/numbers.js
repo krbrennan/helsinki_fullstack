@@ -23,9 +23,17 @@ const personToDelete = (obj) => {
 }
 
 
+const updateNumber = (id, newObj) => {
+    // const request = axios.put(`${baseUrl}/${id}`, newObj)
+    // return request.then(res => res.data) 
+    return axios.put(`${baseUrl}/${id}`, newObj)
+}
+
+
 
 export default {
     getAll,
     create,
-    personToDelete
+    personToDelete,
+    updateNumber
 }

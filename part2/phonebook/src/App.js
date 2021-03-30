@@ -64,7 +64,6 @@ const App = () => {
     setSearchName(searchName)
 
     const filtered = persons.filter((person) => {
-      // person.name
       return person.name.toLowerCase().includes(searchName)
     })
 
@@ -73,18 +72,38 @@ const App = () => {
 
 
 
+  const putNewNumber = (person, newObj) => {
+  // need to send person ID and the new Object
+    const personObject = persons.filter((personObj) => {
+      if(personObj.name == person){
+        return personObj
+      }
+    })
+    // console.log(personObject[0])
+    apiService.updateNumber(personObject[0].id, newObj).then((res) => {
+      // console.log(res.data)
+      setPersons(persons.map(person => person.id !== res.data.id ? person : res.data ))
+    })
+    // then need to update person object in local state
+    
+  }
+
+
+
 
   const submitName = (event) => {
     event.preventDefault()
 
+    const newPerson = {
+      name: newName,
+      number: newNumber
+    }
+
     if(nameTaken(newName, persons)) {
-      return alert(`${newName} is already taken!`)
-    } else {
-      const newPerson = {
-        name: newName,
-        number: newNumber
-      }
-  
+      // PUT new info onto server 
+      putNewNumber(newName, newPerson)
+      // return alert(`${newName} is already taken!`)
+    } else {  
       // setPersons(oldArray => [...oldArray, newPerson])
       // POST to server, update setPersons with response
       apiService.create(newPerson).then((res) => {
