@@ -3,18 +3,26 @@ import React from 'react'
 import Person from './Person'
 
 const Persons = (props) => { 
-  console.log(props)   
+  // console.log(props)   
     if(props.filtered.length === 0) {
       return(
-        props.people.map((person, idx) => {
-           return <Person info={person} />
-        })
+        <div>
+          <ul>
+            {props.people.map((person, idx) => {
+            return <Person delete={props.deletePerson} info={person} />
+          })}
+          </ul>
+        </div>
       )
     } else {
         return(
-            props.filtered.map((person, idx) => {
-                return <Person info={person} />
-              })
+          <div>
+             <ul>
+            {props.filtered.map((person, idx) => {
+                return <li><Person delete={props.deletePerson} info={person} /></li>
+              })}
+          </ul>
+          </div>
         )
     }
 }

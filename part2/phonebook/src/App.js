@@ -95,6 +95,27 @@ const App = () => {
     }
   }
 
+
+
+  const deletePerson = (props) => {
+    // find person first, capture their object, then send apiService(object)
+    const personToDelete = persons.filter((person) => {
+      return person.name == props
+    })
+    // update persons by removing this deleted person
+    apiService.personToDelete(personToDelete[0]).then((res) => {
+      // manually delete entry in current state
+      // res is the person object
+      const newPersons = persons.filter((person) => {
+        if(person.name !== res.name){
+          return person
+        }
+      })
+      setPersons(newPersons)
+    })
+
+  }
+
   // 
   // 
   // 
@@ -119,7 +140,7 @@ const App = () => {
           name={newName}
           />
       <h2>Numbers:</h2>
-        <Persons people={persons} filtered={filteredNames} />
+        <Persons people={persons} deletePerson={deletePerson} filtered={filteredNames} />
       ...
     </div>
   )
