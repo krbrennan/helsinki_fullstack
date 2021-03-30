@@ -11,10 +11,12 @@ const Form = (props) => {
 
 const Country = (props) => {
   // console.log(props.info.name)
+  console.log(props)
   return(
-    <div>
+    <form onSubmit={props.showClicked}>
       <p>{props.info.name}</p>
-    </div>
+      <button>Show</button>
+    </form>
   )
 }
 
@@ -51,7 +53,7 @@ const FinalCountries = (props) => {
       <div>
         <h2>Countries that match your search:</h2>
         {props.countries.map((country) => {
-          return <Country info={country} />
+          return <Country showClicked={props.showClickedCountry} info={country} />
         })}
       </div>
     )
@@ -93,7 +95,7 @@ function App() {
     })
 
     setFilteredCountries(finalSearch)
-    setLettersToSearch('')
+    // setLettersToSearch('')
     setSearched('')
   }
 
@@ -104,11 +106,28 @@ function App() {
     setLettersToSearch(event.target.value.toLowerCase())
   }
 
+  const showClicked = (event) => {
+    event.preventDefault()
+    const countryToExpand = event.target.childNodes[0].innerHTML
+    // console.log(countryToExpand)
+
+    // go through countries, filter out match, setCountries to match
+    const clickedCountry = filteredCountries.filter((country) => {
+      if(country.name == countryToExpand) {
+        return country
+      }
+    })
+
+    setFilteredCountries(clickedCountry)
+    console.log(clickedCountry)
+    // alert('clicked!')
+  }
+
 
   return (
    <div>
      <Form onFormSubmit={submitForm} onFieldChange={ countryToSearchFor } />
-     <FinalCountries clearSearched={clearSetSearched} countries={filteredCountries} />
+     <FinalCountries showClickedCountry={showClicked} clearSearched={clearSetSearched} countries={filteredCountries} />
    </div>
   );
 }
