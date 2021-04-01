@@ -83,9 +83,9 @@ const App = () => {
     console.log(personObject)
     // console.log(personObject[0])
     apiService.updateNumber(personObject[0].id, newObj).then((res) => {
-      console.log(res)
+      // console.log(res)
       setPersons(persons.map((person) => {
-        console.log(person)
+        // console.log(person)
         return person.id !== res.id ? person : res
       }))
     })
@@ -148,6 +148,7 @@ const App = () => {
     })
     // update persons by removing this deleted person
     apiService.personToDelete(personToDelete[0]).then((res) => {
+      // console.log(res)
       // manually delete entry in current state
       // res is the person object
       const newPersons = persons.filter((person) => {
@@ -157,7 +158,15 @@ const App = () => {
       })
       setPersons(newPersons)
     })
-
+    .catch((error) => {
+      // console.log(error.response.status)
+      if(error.response.status == 404) {
+        setErrorMessage(`Information for ${props} has already been removed from the server`)
+        setTimeout(() => {
+          setErrorMessage('')
+        }, 5000)
+      }
+    })
   }
 
 

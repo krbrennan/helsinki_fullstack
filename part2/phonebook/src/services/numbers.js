@@ -19,7 +19,11 @@ const create = (newObject) => {
 }
 
 const personToDelete = (obj) => {
-    return axios.delete(`${baseUrl}/${obj.id}`).then((res) => obj)
+    // return axios.delete(`${baseUrl}/${obj.id}`).then((res) => obj).catch(e => console.log('Cannot delete, user does not exist!'))
+    return axios
+        .delete(`${baseUrl}/${obj.id}`)
+        .then((res) => obj)
+        
 }
 
 
