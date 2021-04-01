@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 
 // Import API service functions
 import apiService from './services/numbers'
@@ -8,6 +7,7 @@ import apiService from './services/numbers'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import Form from './components/Form'
+import ErrorMessage from './components/ErrorMessage'
 
 const App = () => {
   // const [ persons, setPersons ] = useState([
@@ -25,6 +25,7 @@ const App = () => {
   const [ searchName, setSearchName ] = useState('')
   const [ filteredNames, setFilteredNames] = useState([])
 
+  const [ errorMessage, setErrorMessage ] = useState('')
 
 
 
@@ -79,15 +80,26 @@ const App = () => {
         return personObj
       }
     })
+    console.log(personObject)
     // console.log(personObject[0])
     apiService.updateNumber(personObject[0].id, newObj).then((res) => {
-      // console.log(res.data)
-      setPersons(persons.map(person => person.id !== res.data.id ? person : res.data ))
+      console.log(res)
+      setPersons(persons.map((person) => {
+        console.log(person)
+        return person.id !== res.id ? person : res
+      }))
     })
     // then need to update person object in local state
     
   }
 
+
+  const newErrorMessage = (type, name) => {
+    console.log(type)
+    // setMessage if new person added to say "Added ${name}"
+    // setMessage if existing person's number was changed to "Changed ${name}'s phone number"
+    type == 'new' ? setErrorMessage(`Added ${name}`) : setErrorMessage(`${name}'s number changed!`)
+  }
 
 
 
@@ -102,15 +114,28 @@ const App = () => {
     if(nameTaken(newName, persons)) {
       // PUT new info onto server 
       putNewNumber(newName, newPerson)
+
+      newErrorMessage('update', newPerson.name)
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000)
+
       // return alert(`${newName} is already taken!`)
     } else {  
-      // setPersons(oldArray => [...oldArray, newPerson])
-      // POST to server, update setPersons with response
       apiService.create(newPerson).then((res) => {
         setPersons(oldArray => [...oldArray, res.data])
       })
-      setNewName('')
+
+
+      newErrorMessage('new', newPerson.name)
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000)
+
+      // setPersons(oldArray => [...oldArray, newPerson])
+      // POST to server, update setPersons with response
       setNewNumber('')
+      setNewName('')
     }
   }
 
@@ -135,6 +160,7 @@ const App = () => {
 
   }
 
+
   // 
   // 
   // 
@@ -149,7 +175,10 @@ const App = () => {
 
   return (
     <div>
-      <h1>Phonebook</h1>
+      <div className='top-div'>
+        <h1 className='title'>Phonebook</h1>
+        <ErrorMessage message={errorMessage} />
+      </div>
         <Filter submitSearch={submitSearch} onTextChange={handleFilterChange} />
         <Form 
           submitName={submitName} 
