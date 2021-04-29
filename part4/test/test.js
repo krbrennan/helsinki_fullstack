@@ -55,6 +55,16 @@ test('Notes are received as JSON', async () => {
         .expect('Content-Type', /application\/json/)
 })
 
+test('Returns total number of blogs', async () => {
+    await api
+        .get('/api/blogs')
+        .then((blogs) => {
+            blogs.body.forEach((blog) => {
+                expect(blog.id).toBeDefined()
+            })
+        })
+})
+
 afterAll(() => {
     mongoose.connection.close()
   })
